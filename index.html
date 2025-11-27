@@ -6,5 +6,63 @@
     <link rel="stylesheet" href="src/css/output.css" />
     <title>Pokedex | Lumis</title>
   </head>
-  <body></body>
+  <body>
+    <header class="container mx-auto p-4 flex justify-between items-center">
+        <div id="logo" class="">
+            <a href="/"><img src="assets/logo.svg" alt="Logo Lumis Pokédex" class="w-full h-auto" /></a>
+        </div>
+        <nav>
+
+            <a href="/" class="mr-4 bg-gray-100 p-2 rounded-md hover:bg-gray-300">Home</a>
+            <a href="/">Pokédex</a>
+        </nav>
+    </header>
+    <hr class="border-gray-300" />
+    <main class="container mx-auto py-8 px-4">
+        <section id="search-section" class="mb-8">
+            <div class="relative max-w-xl mx-auto">
+                <input
+                    type="text"
+                    id="pokemon-search"
+                    placeholder="Faça uma busca pelo nome do pokémon"
+                    class="w-full p-3 pl-10 rounded-full bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                <span class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <img src="assets/icons/search-icon.svg" alt="Ícone de busca" class="w-4.5 h-4.5 text-gray-500">
+                </span>
+            </div>
+        </section>
+
+        <section id="pokemon-list-container">
+            <div id="pokemon-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="pokemon-card bg-gray-50 p-4 rounded-xl shadow-md text-center">
+                    <span class="text-xs bg-green-200 text-green-800 px-2 py-0.5 rounded-full block w-fit mx-auto mb-2">Planta</span>
+                    <span class="text-gray-500 text-sm block mb-1">#1001</span>
+                                        <h3 class="text-lg font-semibold mt-2">Bulbasauro</h3>
+                </div>
+                <div class="pokemon-card bg-gray-50 p-4 rounded-xl shadow-md text-center">
+                    <span class="text-xs bg-green-200 text-green-800 px-2 py-0.5 rounded-full block w-fit mx-auto mb-2">Planta</span>
+                    <span class="text-gray-500 text-sm block mb-1">#1001</span>
+                                        <h3 class="text-lg font-semibold mt-2">Bulbasauro</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="container mx-auto p-4 flex justify-center items-center mt-8 space-x-4">
+        <button id="prev-page" class="flex items-center text-gray-600 hover:text-gray-900">
+            &larr; Anterior
+        </button>
+        <div id="pagination-numbers" class="space-x-2">
+            <span class="px-3 py-1 bg-blue-500 text-white rounded-md cursor-pointer">1</span>
+            <span class="px-3 py-1 hover:bg-gray-200 rounded-md cursor-pointer">2</span>
+            <span class="px-3 py-1 hover:bg-gray-200 rounded-md cursor-pointer">3</span>
+        </div>
+        <button id="next-page" class="flex items-center text-gray-600 hover:text-gray-900">
+            Próximo &rarr;
+        </button>
+    </footer>
+
+    <script src="./src/js/app.js" defer></script>
+</body>
 </html>
