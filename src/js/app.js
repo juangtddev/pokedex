@@ -33,6 +33,26 @@ function debounce(func, delay = 300) {
 // 2. FUNÇÕES DE DADOS E API
 // ==============================
 
+function getPokemonImageUrl(sprites) {
+
+    const officialArt = sprites.other['official-artwork']?.front_default;
+    if (officialArt) {
+        return officialArt;
+    }
+
+    const dreamWorld = sprites.other.dream_world?.front_default;
+    if (dreamWorld) {
+        return dreamWorld;
+    }
+
+    const defaultSprite = sprites.front_default;
+    if (defaultSprite) {
+        return defaultSprite;
+    }
+        
+    return 'assets/placeholder.png'; 
+}
+
 async function fetchPokemons(offset = 0, limit = 1000) {
   try {
     const url = `${POKEMON_API_BASE_URL}?offset=${offset}&limit=${limit}`;
@@ -100,7 +120,7 @@ function createPokemonCard(pokemon) {
     
     const name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     const id = pokemon.id.toString().padStart(3, '0');
-    const imageUrl = pokemon.sprites.other['official-artwork'].front_default;
+    const imageUrl = getPokemonImageUrl(pokemon.sprites);
     const mainType = pokemon.types[0].type.name; 
 
     const typesHtml = pokemon.types.map(typeInfo => {
