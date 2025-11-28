@@ -1,4 +1,48 @@
 const POKEMON_API_BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
+const pokemonGrid = document.getElementById('pokemon-grid');
+
+/**
+ * Cria o HTML de um único Card de Pokémon.
+ * @param {Object} pokemon - Objeto de detalhes do Pokémon (do loadInitialData).
+ * @returns {string} O HTML completo do card.
+ */
+function createPokemonCard(pokemon) {
+    const name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+    const id = pokemon.id.toString().padStart(3, '0');
+
+    const type = pokemon.types[0].type.name.charAt(0).toUpperCase() + pokemon.types[0].type.name.slice(1);
+    const imageUrl = pokemon.sprites.other['official-artwork'].front_default;
+    
+    const typeBgColor = 'bg-green-200'; 
+    const typeTextColor = 'text-green-800';
+    
+    return `
+        <div class="pokemon-card bg-white p-4 rounded-xl shadow-md text-center hover:shadow-xl transition-shadow duration-300">
+            <span class="text-xs ${typeBgColor} ${typeTextColor} px-2 py-0.5 rounded-full block w-fit mx-auto mb-2">${type}</span>
+            <span class="text-gray-500 text-sm block mb-1">#${id}</span>
+            
+            <img 
+                src="${imageUrl}" 
+                alt="${name}" 
+                class="w-24 h-24 mx-auto object-contain"
+                loading="lazy"
+            >
+            
+            <h3 class="text-lg font-semibold mt-2">${name}</h3>
+        </div>
+    `;
+}
+
+/**
+ * Renderiza a lista de Pokémon na grade e limpa a grade primeiro.
+ * @param {Array<Object>} pokemons - Lista de objetos Pokémon detalhados.
+ */
+function renderPokemonList(pokemons) {
+    if (!pokemonGrid) return;
+    pokemonGrid.innerHTML = ''; 
+    const cardHTML = pokemons.map(pokemon => createPokemonCard(pokemon)).join('');
+    pokemonGrid.innerHTML = cardHTML;
+}
 
 /**
  * Busca detalhes completos de um Pokémon através de sua URL.
@@ -40,6 +84,7 @@ async function loadInitialData(offset = 0, limit = 18) {
     const validPokemons = detailedPokemons.filter(pokemon => pokemon !== null);
 
     console.log("Dados Detalhados Prontos para Renderização:", validPokemons);
+    renderPokemonList(validPokemons);
     
 }
 
