@@ -32,7 +32,12 @@
                 </span>
             </div>
         </section>
-
+<div id="loading-spinner" class="hidden w-full text-center py-20 ">
+    <div class="animate-spin inline-block w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full" role="status">
+        <span class="sr-only">Carregando...</span>
+    </div>
+    <p class="mt-4 text-gray-500">Carregando Pokédex...</p>
+</div>
         <section id="pokemon-list-container">
             <div id="pokemon-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
                 <div class="pokemon-card bg-gray-50 p-4 rounded-xl shadow-md text-center">

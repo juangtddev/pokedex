@@ -11,6 +11,7 @@ const prevButton = document.getElementById('prev-page');
 const nextButton = document.getElementById('next-page');
 const paginationNumbersContainer = document.getElementById('pagination-numbers');
 const searchInput = document.getElementById('pokemon-search');
+const loadingSpinner = document.getElementById('loading-spinner');
 
 let totalPokemonCount = 0;
 let currentPage = 1;
@@ -85,7 +86,7 @@ async function fetchPokemonDetails(url) {
 async function searchPokemon(term) {
  
     disablePagination();
- 
+    showLoading();
 
     try {
         const url = `${POKEMON_SEARCH_API_BASE_URL}${term.toLowerCase().trim()}`;
@@ -110,6 +111,8 @@ async function searchPokemon(term) {
         console.error("Erro na busca de Pokémon:", error);
         renderPokemonList([]);
  
+    } finally {
+        hideLoading();
     }
 }
 
@@ -231,12 +234,22 @@ function renderPaginationNumbers(maxPages) {
     }
 }
 
+function showLoading() {
+    pokemonGrid.innerHTML = ''; // Limpa a grade (opcional, mas recomendado)
+    loadingSpinner.classList.remove('hidden');
+}
+
+function hideLoading() {
+    loadingSpinner.classList.add('hidden');
+}
 
 // ==============================
 // 4. FUNÇÕES DE PAGINAÇÃO E CONTROLE
 // ==============================
 
 async function fetchAllPokemonForCache() {
+    showLoading();
+    try {
     const initialData = await fetchPokemons(0, 1);
     const totalCount = initialData.count || 100000;
     const listData = await fetchPokemons(0, totalCount);
@@ -244,7 +257,10 @@ async function fetchAllPokemonForCache() {
     if (listData.results && listData.results.length > 0) {
         allPokemonData = listData.results;
         totalPokemonCount = listData.count; 
-        await loadPokemons();
+        await loadPokemons(false);
+    }
+    } finally {
+        hideLoading();      
     }
 }
 
@@ -283,17 +299,20 @@ function goToPreviousPage() {
     window.scrollTo(0, 0);
 }
 
-async function loadPokemons() {
+async function loadPokemons(showLoader = true) {
+    if (showLoader) {
+        showLoading();
+    }
     const offset = (currentPage - 1) * POKEMON_LIMIT;
 
     const listSlice = allPokemonData.slice(offset, offset + POKEMON_LIMIT);
-
     if (listSlice.length === 0) {
-        renderPokemonList([]);
-        return;
-    }
-
-    const detailPromises = listSlice.map(pokemon => 
+            renderPokemonList([]);
+            return;
+        }
+    try {
+        
+        const detailPromises = listSlice.map(pokemon => 
         fetchPokemonDetails(pokemon.url)
     );
     const detailedPokemons = await Promise.all(detailPromises);
@@ -301,6 +320,11 @@ async function loadPokemons() {
 
     renderPokemonList(validPokemons);
     updatePaginationUI();
+    } finally {
+        if (showLoader) {
+            hideLoading();
+        }
+    }
 }
 
 function disablePagination() {
