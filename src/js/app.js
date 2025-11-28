@@ -15,12 +15,25 @@ const searchInput = document.getElementById('pokemon-search');
 let totalPokemonCount = 0;
 let currentPage = 1;
 let currentSearchTerm = '';
+let allPokemonData = []
+
+function debounce(func, delay = 300) {
+    let timeoutId;
+    return function(...args) {
+        
+        clearTimeout(timeoutId);
+        
+        timeoutId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}
 
 // ==============================
 // 2. FUNÇÕES DE DADOS E API
 // ==============================
 
-async function fetchPokemons(offset = 0, limit = POKEMON_LIMIT) {
+async function fetchPokemons(offset = 0, limit = 1000) {
   try {
     const url = `${POKEMON_API_BASE_URL}?offset=${offset}&limit=${limit}`;
     const response = await fetch(url);
@@ -203,6 +216,18 @@ function renderPaginationNumbers(maxPages) {
 // 4. FUNÇÕES DE PAGINAÇÃO E CONTROLE
 // ==============================
 
+async function fetchAllPokemonForCache() {
+    const initialData = await fetchPokemons(0, 1);
+    const totalCount = initialData.count || 100000;
+    const listData = await fetchPokemons(0, totalCount);
+
+    if (listData.results && listData.results.length > 0) {
+        allPokemonData = listData.results;
+        totalPokemonCount = listData.count; 
+        await loadPokemons();
+    }
+}
+
 function updatePaginationUI() {
 
     if (currentPage <= 1) {
@@ -240,16 +265,15 @@ function goToPreviousPage() {
 
 async function loadPokemons() {
     const offset = (currentPage - 1) * POKEMON_LIMIT;
-    
-    const listData = await fetchPokemons(offset, POKEMON_LIMIT);
 
-    if (!listData.results || listData.results.length === 0) {
-            return;
+    const listSlice = allPokemonData.slice(offset, offset + POKEMON_LIMIT);
+
+    if (listSlice.length === 0) {
+        renderPokemonList([]);
+        return;
     }
-    
-    totalPokemonCount = listData.count;
 
-    const detailPromises = listData.results.map(pokemon => 
+    const detailPromises = listSlice.map(pokemon => 
         fetchPokemonDetails(pokemon.url)
     );
     const detailedPokemons = await Promise.all(detailPromises);
@@ -271,43 +295,57 @@ function enablePagination() {
     updatePaginationUI(); 
 }
 
-function handleSearch(event) {
-    const term = searchInput.value;
-   
-    if ((event.type === 'keyup' && event.key === 'Enter') || (event.type === 'blur' && term.length > 0)) {
-        
-        currentSearchTerm = term;
-        
-        
-        searchPokemon(currentSearchTerm);
+function handleSearchExecution() {
+    const term = searchInput.value.trim().toLowerCase();
 
-    } else if (event.type === 'keyup' && event.key === 'Backspace' && term.length === 0) {
-       
+    if (term.length === 0) {
         if (currentSearchTerm) {
             currentSearchTerm = '';
             loadPokemons(); 
             enablePagination(); 
         }
+        return;
     }
+
+    const filteredList = allPokemonData.filter(pokemon => 
+        pokemon.name.startsWith(term) 
+    );
+
+    currentSearchTerm = term;
+    disablePagination();
+
+    if (filteredList.length === 0) {
+        renderPokemonList([]); 
+        return;
+    }
+
+    const detailPromises = filteredList.map(pokemon => 
+        fetchPokemonDetails(pokemon.url)
+    );
+    Promise.all(detailPromises)
+        .then(detailedPokemons => {
+            const validPokemons = detailedPokemons.filter(p => p !== null);
+            renderPokemonList(validPokemons);
+        });
 }
 
 // ==============================
 // 5. INICIALIZAÇÃO E EVENTOS
 // ==============================
 
+const debouncedSearch = debounce(handleSearchExecution, 300); 
+
 function setupEventListeners() {
-    
     prevButton.addEventListener('click', goToPreviousPage);
     nextButton.addEventListener('click', goToNextPage);
-    
-    
-    searchInput.addEventListener('keyup', handleSearch);
-    searchInput.addEventListener('blur', handleSearch);
+
+    searchInput.addEventListener('keyup', debouncedSearch);
+
 }
 
 async function init() {
     setupEventListeners();
-    await loadPokemons();
+    await fetchAllPokemonForCache();
 }
 
 document.addEventListener('DOMContentLoaded', init);
