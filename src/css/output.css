@@ -213,9 +213,6 @@
   .relative {
     position: relative;
   }
-  .top-1 {
-    top: calc(var(--spacing) * 1);
-  }
   .top-1\/2 {
     top: calc(1/2 * 100%);
   }
@@ -273,12 +270,6 @@
   .grid {
     display: grid;
   }
-  .table {
-    display: table;
-  }
-  .h-4 {
-    height: calc(var(--spacing) * 4);
-  }
   .h-4\.5 {
     height: calc(var(--spacing) * 4.5);
   }
@@ -290,9 +281,6 @@
   }
   .h-auto {
     height: auto;
-  }
-  .w-4 {
-    width: calc(var(--spacing) * 4);
   }
   .w-4\.5 {
     width: calc(var(--spacing) * 4.5);
@@ -309,13 +297,6 @@
   .max-w-xl {
     max-width: var(--container-xl);
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .-translate-y-1 {
-    --tw-translate-y: calc(var(--spacing) * -1);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
   .-translate-y-1\/2 {
     --tw-translate-y: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -326,17 +307,11 @@
   .cursor-pointer {
     cursor: pointer;
   }
-  .resize {
-    resize: both;
-  }
   .grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .items-center {
     align-items: center;
-  }
-  .items-start {
-    align-items: flex-start;
   }
   .justify-between {
     justify-content: space-between;
@@ -344,21 +319,11 @@
   .justify-center {
     justify-content: center;
   }
-  .justify-end {
-    justify-content: flex-end;
-  }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
-  }
-  .space-x-1 {
-    :where(& > :not(:last-child)) {
-      --tw-space-x-reverse: 0;
-      margin-inline-start: calc(calc(var(--spacing) * 1) * var(--tw-space-x-reverse));
-      margin-inline-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-x-reverse)));
-    }
   }
   .space-x-2 {
     :where(& > :not(:last-child)) {
@@ -411,288 +376,6 @@
   .bg-green-200 {
     background-color: var(--color-green-200);
   }
-  .bg-type-bug {
-    background-color: var(--color-type-bug);
-  }
-  .bg-type-bug\/10 {
-    background-color: color-mix(in srgb, #A6B91A 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-bug) 10%, transparent);
-    }
-  }
-  .bg-type-bug\/20 {
-    background-color: color-mix(in srgb, #A6B91A 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-bug) 20%, transparent);
-    }
-  }
-  .bg-type-dark {
-    background-color: var(--color-type-dark);
-  }
-  .bg-type-dark\/10 {
-    background-color: color-mix(in srgb, #705746 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-dark) 10%, transparent);
-    }
-  }
-  .bg-type-dark\/20 {
-    background-color: color-mix(in srgb, #705746 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-dark) 20%, transparent);
-    }
-  }
-  .bg-type-dragon {
-    background-color: var(--color-type-dragon);
-  }
-  .bg-type-dragon\/10 {
-    background-color: color-mix(in srgb, #6F35FC 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-dragon) 10%, transparent);
-    }
-  }
-  .bg-type-dragon\/20 {
-    background-color: color-mix(in srgb, #6F35FC 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-dragon) 20%, transparent);
-    }
-  }
-  .bg-type-electric {
-    background-color: var(--color-type-electric);
-  }
-  .bg-type-electric\/10 {
-    background-color: color-mix(in srgb, #F7D02C 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-electric) 10%, transparent);
-    }
-  }
-  .bg-type-electric\/20 {
-    background-color: color-mix(in srgb, #F7D02C 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-electric) 20%, transparent);
-    }
-  }
-  .bg-type-fairy {
-    background-color: var(--color-type-fairy);
-  }
-  .bg-type-fairy\/10 {
-    background-color: color-mix(in srgb, #D685AD 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fairy) 10%, transparent);
-    }
-  }
-  .bg-type-fairy\/20 {
-    background-color: color-mix(in srgb, #D685AD 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fairy) 20%, transparent);
-    }
-  }
-  .bg-type-fighting {
-    background-color: var(--color-type-fighting);
-  }
-  .bg-type-fighting\/10 {
-    background-color: color-mix(in srgb, #C22E28 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fighting) 10%, transparent);
-    }
-  }
-  .bg-type-fighting\/20 {
-    background-color: color-mix(in srgb, #C22E28 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fighting) 20%, transparent);
-    }
-  }
-  .bg-type-fire {
-    background-color: var(--color-type-fire);
-  }
-  .bg-type-fire\/10 {
-    background-color: color-mix(in srgb, #EE8130 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fire) 10%, transparent);
-    }
-  }
-  .bg-type-fire\/20 {
-    background-color: color-mix(in srgb, #EE8130 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fire) 20%, transparent);
-    }
-  }
-  .bg-type-fire\/30 {
-    background-color: color-mix(in srgb, #EE8130 30%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fire) 30%, transparent);
-    }
-  }
-  .bg-type-fire\/80 {
-    background-color: color-mix(in srgb, #EE8130 80%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-fire) 80%, transparent);
-    }
-  }
-  .bg-type-flying {
-    background-color: var(--color-type-flying);
-  }
-  .bg-type-flying\/10 {
-    background-color: color-mix(in srgb, #A98FF3 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-flying) 10%, transparent);
-    }
-  }
-  .bg-type-flying\/20 {
-    background-color: color-mix(in srgb, #A98FF3 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-flying) 20%, transparent);
-    }
-  }
-  .bg-type-ghost {
-    background-color: var(--color-type-ghost);
-  }
-  .bg-type-ghost\/10 {
-    background-color: color-mix(in srgb, #735797 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-ghost) 10%, transparent);
-    }
-  }
-  .bg-type-ghost\/20 {
-    background-color: color-mix(in srgb, #735797 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-ghost) 20%, transparent);
-    }
-  }
-  .bg-type-grass {
-    background-color: var(--color-type-grass);
-  }
-  .bg-type-grass\/10 {
-    background-color: color-mix(in srgb, #7AC74C 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-grass) 10%, transparent);
-    }
-  }
-  .bg-type-grass\/20 {
-    background-color: color-mix(in srgb, #7AC74C 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-grass) 20%, transparent);
-    }
-  }
-  .bg-type-ground {
-    background-color: var(--color-type-ground);
-  }
-  .bg-type-ground\/10 {
-    background-color: color-mix(in srgb, #E2BF65 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-ground) 10%, transparent);
-    }
-  }
-  .bg-type-ground\/20 {
-    background-color: color-mix(in srgb, #E2BF65 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-ground) 20%, transparent);
-    }
-  }
-  .bg-type-ice {
-    background-color: var(--color-type-ice);
-  }
-  .bg-type-ice\/10 {
-    background-color: color-mix(in srgb, #96D9D6 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-ice) 10%, transparent);
-    }
-  }
-  .bg-type-ice\/20 {
-    background-color: color-mix(in srgb, #96D9D6 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-ice) 20%, transparent);
-    }
-  }
-  .bg-type-normal {
-    background-color: var(--color-type-normal);
-  }
-  .bg-type-normal\/10 {
-    background-color: color-mix(in srgb, #A8A77A 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-normal) 10%, transparent);
-    }
-  }
-  .bg-type-normal\/20 {
-    background-color: color-mix(in srgb, #A8A77A 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-normal) 20%, transparent);
-    }
-  }
-  .bg-type-poison {
-    background-color: var(--color-type-poison);
-  }
-  .bg-type-poison\/10 {
-    background-color: color-mix(in srgb, #A33EA1 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-poison) 10%, transparent);
-    }
-  }
-  .bg-type-poison\/20 {
-    background-color: color-mix(in srgb, #A33EA1 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-poison) 20%, transparent);
-    }
-  }
-  .bg-type-psychic {
-    background-color: var(--color-type-psychic);
-  }
-  .bg-type-psychic\/10 {
-    background-color: color-mix(in srgb, #F95587 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-psychic) 10%, transparent);
-    }
-  }
-  .bg-type-psychic\/20 {
-    background-color: color-mix(in srgb, #F95587 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-psychic) 20%, transparent);
-    }
-  }
-  .bg-type-rock {
-    background-color: var(--color-type-rock);
-  }
-  .bg-type-rock\/10 {
-    background-color: color-mix(in srgb, #B6A136 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-rock) 10%, transparent);
-    }
-  }
-  .bg-type-rock\/20 {
-    background-color: color-mix(in srgb, #B6A136 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-rock) 20%, transparent);
-    }
-  }
-  .bg-type-steel {
-    background-color: var(--color-type-steel);
-  }
-  .bg-type-steel\/10 {
-    background-color: color-mix(in srgb, #B7B7CE 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-steel) 10%, transparent);
-    }
-  }
-  .bg-type-steel\/20 {
-    background-color: color-mix(in srgb, #B7B7CE 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-steel) 20%, transparent);
-    }
-  }
-  .bg-type-water {
-    background-color: var(--color-type-water);
-  }
-  .bg-type-water\/10 {
-    background-color: color-mix(in srgb, #6390F0 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-water) 10%, transparent);
-    }
-  }
-  .bg-type-water\/20 {
-    background-color: color-mix(in srgb, #6390F0 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-type-water) 20%, transparent);
-    }
-  }
   .object-contain {
     object-fit: contain;
   }
@@ -713,9 +396,6 @@
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
-  }
-  .py-0 {
-    padding-block: calc(var(--spacing) * 0);
   }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
@@ -775,16 +455,9 @@
   .text-white {
     color: var(--color-white);
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .shadow-md {
     --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .transition-shadow {
     transition-property: box-shadow;
@@ -988,11 +661,6 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @property --tw-duration {
   syntax: "*";
   inherits: false;
@@ -1040,7 +708,6 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
-      --tw-outline-style: solid;
       --tw-duration: initial;
       --tw-scale-x: 1;
       --tw-scale-y: 1;
