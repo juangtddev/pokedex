@@ -7,28 +7,51 @@ const pokemonGrid = document.getElementById('pokemon-grid');
  * @returns {string} O HTML completo do card.
  */
 function createPokemonCard(pokemon) {
+    
     const name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     const id = pokemon.id.toString().padStart(3, '0');
-
-    const type = pokemon.types[0].type.name.charAt(0).toUpperCase() + pokemon.types[0].type.name.slice(1);
     const imageUrl = pokemon.sprites.other['official-artwork'].front_default;
     
-    const typeBgColor = 'bg-green-200'; 
-    const typeTextColor = 'text-green-800';
-    
+    const mainType = pokemon.types[0].type.name; 
+
+    const typesHtml = pokemon.types.map(typeInfo => {
+        const type = typeInfo.type.name;
+        const typeDisplay = type.charAt(0).toUpperCase() + type.slice(1);
+        const bgColorClass = `bg-type-${type}`.toLowerCase().trim();;
+         console.log("Gerando badge para tipo:", type, "com classe:", bgColorClass);
+        return `
+            <div class="${bgColorClass} text-white text-xs font-semibold border border-current px-2 py-0.5 rounded-full ">
+                ${typeDisplay}
+            </div>
+        `;
+    }).join('');
+
     return `
-        <div class="pokemon-card bg-white p-4 rounded-xl shadow-md text-center hover:shadow-xl transition-shadow duration-300">
-            <span class="text-xs ${typeBgColor} ${typeTextColor} px-2 py-0.5 rounded-full block w-fit mx-auto mb-2">${type}</span>
-            <span class="text-gray-500 text-sm block mb-1">#${id}</span>
+        <div data-id="${id}" class="pokemon-card bg-type-${mainType}/20 
+        p-4 rounded-xl shadow-md text-center 
+                     border border-gray-100 
+                    hover:shadow-lg transition-shadow duration-300 transform hover:scale-[1.02] cursor-pointer">
+          
+                    <div class="flex justify-between items-center">
+            <div class="flex justify-center items-center gap-1">
+                ${typesHtml}
+            </div>
+            <div class="flex justify-center items-center">
+                <span class="text-gray-500 text-sm font-medium">#${id}</span>
+            </div>
+            </div>
             
-            <img 
-                src="${imageUrl}" 
-                alt="${name}" 
-                class="w-24 h-24 mx-auto object-contain"
-                loading="lazy"
-            >
+            <div class="flex justify-center items-center h-28 my-2">
+                <img 
+                    src="${imageUrl}" 
+                    alt="${name} Artwork" 
+                    class="w-32 h-24 object-contain transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
+                >
+            </div>
             
-            <h3 class="text-lg font-semibold mt-2">${name}</h3>
+            <h3 class="text-xl font-bold text-gray-800 mt-2">${name}</h3>
+                        
         </div>
     `;
 }
