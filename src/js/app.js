@@ -85,30 +85,65 @@ async function fetchPokemonDetails(url) {
     }
 }
 
+function goToNextPage() {
+    currentPage++;
+    loadPokemons();
+    window.scrollTo(0, 0);
+}
+
+function goToPreviousPage() {
+    currentPage--;
+    loadPokemons();
+    window.scrollTo(0, 0);
+}
+
+function updatePaginationUI() {
+
+    if (currentPage <= 1) {
+        prevButton.disabled = true;
+        prevButton.classList.add('opacity-50', 'cursor-not-allowed');
+    } else {
+        prevButton.disabled = false;
+        prevButton.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+
+    const maxPages = Math.ceil(totalPokemonCount / POKEMON_LIMIT);
+    if (currentPage >= maxPages) {
+        nextButton.disabled = true;
+        nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+    } else {
+        nextButton.disabled = false;
+        nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+    
+    paginationNumbersContainer.innerHTML = `<span class="px-3 py-1 bg-blue-500 text-white rounded-md">${currentPage}</span>`;
+}
+
 /**
  * Carrega a primeira página de dados, incluindo os detalhes de cada Pokémon.
  * @param {number} offset - Ponto de início da lista.
  * @param {number} limit - Número de Pokémon.
  */
-async function loadInitialData(offset = 0, limit = 18) {
-    const listData = await fetchPokemons(offset, limit);
+async function loadPokemons() {
+    const offset = (currentPage - 1) * POKEMON_LIMIT;
+    
+    const listData = await fetchPokemons(offset, POKEMON_LIMIT);
 
     if (!listData.results || listData.results.length === 0) {
-        console.log("Nenhum Pokémon encontrado.");
-        return;
+            return;
     }
+    
+    totalPokemonCount = listData.count;
 
     const detailPromises = listData.results.map(pokemon => 
         fetchPokemonDetails(pokemon.url)
     );
-
-   const detailedPokemons = await Promise.all(detailPromises);
-
+    const detailedPokemons = await Promise.all(detailPromises);
     const validPokemons = detailedPokemons.filter(pokemon => pokemon !== null);
 
-    console.log("Dados Detalhados Prontos para Renderização:", validPokemons);
     renderPokemonList(validPokemons);
     
+    updatePaginationUI();
 }
 
 /**
@@ -137,9 +172,27 @@ async function fetchPokemons(offset = 0, limit = 18) {
   }
 }
 
+// Elementos do DOM
+const prevButton = document.getElementById('prev-page');
+const nextButton = document.getElementById('next-page');
+const paginationNumbersContainer = document.getElementById('pagination-numbers'); // Container dos números
+
+// Variáveis de Estado
+let currentPageOffset = 0;
+const POKEMON_LIMIT = 18; // 18 Pokémon por página, baseado no layout do Figma
+let totalPokemonCount = 0; // Total de Pokémon, para calcular o número de páginas
+let currentPage = 1;
+
+function setupEventListeners() {
+    
+    prevButton.addEventListener('click', goToPreviousPage);
+    nextButton.addEventListener('click', goToNextPage);
+    
+}
+
 async function init() {
-    console.log('Módulo Principal Configurado e Inicializando Carga de Dados...');
-    await loadInitialData(0, 18);
+    setupEventListeners();
+    await loadPokemons();
 }
 
 document.addEventListener('DOMContentLoaded', init);
