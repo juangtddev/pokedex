@@ -97,6 +97,62 @@ function goToPreviousPage() {
     window.scrollTo(0, 0);
 }
 
+function renderPaginationNumbers(maxPages) {
+    if (!paginationNumbersContainer) return;
+    
+    paginationNumbersContainer.innerHTML = ''; 
+    
+    const maxVisiblePages = 3; 
+    let startPage = Math.max(1, currentPage - 1);
+    let endPage = Math.min(maxPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage < maxVisiblePages - 1) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+        const pageNumber = i;
+        const isActive = pageNumber === currentPage;
+        
+        const classList = isActive 
+            ? 'px-3 py-1 bg-blue-500 text-white rounded-md cursor-default' 
+            : 'px-3 py-1 text-gray-700 hover:bg-gray-200 rounded-md cursor-pointer transition duration-150';
+
+        const pageElement = document.createElement('span');
+        pageElement.className = classList;
+        pageElement.textContent = pageNumber;
+        
+        if (!isActive) {
+            pageElement.addEventListener('click', () => {
+                currentPage = pageNumber;
+                loadPokemons();
+                window.scrollTo(0, 0);
+            });
+        }
+
+        paginationNumbersContainer.appendChild(pageElement);
+    }
+
+    if (endPage < maxPages) {
+         const ellipsis = document.createElement('span');
+         ellipsis.textContent = '...';
+         ellipsis.className = 'px-3 py-1 text-gray-500 cursor-default';
+         paginationNumbersContainer.appendChild(ellipsis);
+    }
+
+    if (endPage < maxPages) {
+        const lastPageButton = document.createElement('span');
+        lastPageButton.textContent = maxPages;
+        lastPageButton.className = 'px-3 py-1 text-gray-700 hover:bg-gray-200 rounded-md cursor-pointer transition duration-150';
+        lastPageButton.addEventListener('click', () => {
+            currentPage = maxPages;
+            loadPokemons();
+            window.scrollTo(0, 0);
+        });
+        paginationNumbersContainer.appendChild(lastPageButton);
+    }
+}
+
 function updatePaginationUI() {
 
     if (currentPage <= 1) {
@@ -108,15 +164,7 @@ function updatePaginationUI() {
     }
 
     const maxPages = Math.ceil(totalPokemonCount / POKEMON_LIMIT);
-    if (currentPage >= maxPages) {
-        nextButton.disabled = true;
-        nextButton.classList.add('opacity-50', 'cursor-not-allowed');
-    } else {
-        nextButton.disabled = false;
-        nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
-    }
-    
-    paginationNumbersContainer.innerHTML = `<span class="px-3 py-1 bg-blue-500 text-white rounded-md">${currentPage}</span>`;
+    renderPaginationNumbers(maxPages);
 }
 
 /**
